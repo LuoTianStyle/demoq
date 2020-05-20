@@ -4,12 +4,15 @@ import styled from 'styled-components';
 import Control from './control'
 import BreadPath from './../../components/BreadPath'
 import TableDropDown from './tableDropDown'
-import { Table, Tag } from 'antd'
-import { fileGetList } from './../../api/api'
+import { Table, Tag, message } from 'antd'
+import { fileGetList, fileDownloadDD } from './../../api/api'
 import { FolderTwoTone, FileExcelTwoTone, UnorderedListOutlined } from '@ant-design/icons';
 import GLOBAL from '../../utils/utils';
 import DocContext from './context'
+import * as dd from "dingtalk-jsapi";
 import NewDir from './../../components/newDir'
+import GlobalLoadingContext from './../../components/globalContext'
+import { useContext } from 'react';
 const NameStyle = styled.span`
 cursor:pointer;
 `
@@ -21,6 +24,7 @@ function Index () {
   const [loading, setLoding] = useState(false)
   const [dirShow, setDirShow] = useState(false)
   const [selectedRows, setSelectedRows] = useState([])
+  const setGlobalLoading = useContext(GlobalLoadingContext).setGlobalLoading
   useEffect(() => {
     enterDir(currentPath)
   }, [])
@@ -73,6 +77,57 @@ function Index () {
       setLoding(false)
     })
   }
+  const downloadFile = (record) => {
+
+    if (record.processInstanceId) {
+      if (dd.env.platform === "notInDingTalk") {
+        message.warn('请在钉钉中打开')
+      } else {
+        setGlobalLoading(true)
+        if (!localStorage.getItem('ddUserInfo')) {
+          localStorage.setItem('userData', '');
+          localStorage.setItem('ddUserInfo', '');
+          location.reload();
+        }
+        fileDownloadDD({
+          uuid: record.uuid,
+          dingtalkUserId: JSON.parse(localStorage.getItem('ddUserInfo')).userid
+        }).then(res => {
+          const { spaceId,
+            fileId,
+            fileName,
+            fileSize,
+            fileType, } = res.data
+          dd.biz.cspace.preview({
+            corpId: JSON.parse(localStorage.getItem('ddUserInfo')).corpId,
+            spaceId,
+            fileId,
+            fileName,
+            fileSize,
+            fileType,
+            onSuccess: function () {
+              setGlobalLoading(false)
+
+              //无，直接在native显示文件详细信息
+            },
+            onFail: function (err) {
+              setGlobalLoading(false)
+
+              message.error('网络错误请求失败')
+              // 无，直接在native页面显示具体的错误
+            }
+          });
+        }).catch(() => {
+          setGlobalLoading(false)
+        })
+        /*
+        钉钉下载
+        */
+      }
+    } else {
+      window.open(`${GLOBAL.apiUrl}/file/download?uuid=${record.uuid}&token=${JSON.parse(localStorage.getItem('userData')).token}`)
+    }
+  }
   const columns = [
     {
       title: '名称', dataIndex: 'name', render: (e, record) => {
@@ -81,7 +136,7 @@ function Index () {
             enterDir({ folderId: record.id, name: e }, 1, 10)
           }}><FolderTwoTone />{e}</NameStyle>
         } else {
-          return <NameStyle><FileExcelTwoTone twoToneColor='#E9967A' />{e}</NameStyle>
+          return <NameStyle onClick={() => { downloadFile(record) }}><FileExcelTwoTone twoToneColor='#E9967A' />{e}</NameStyle>
         }
       }
     },
@@ -92,6 +147,7 @@ function Index () {
         return <NameStyle>
           <TableDropDown
             record={record}
+            downloadFile={downloadFile}
           >
             <UnorderedListOutlined
             />

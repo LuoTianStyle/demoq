@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { HashRouter as Router, Route, Redirect, withRouter } from 'react-router-dom';
 import routes from './router/router'
 import UserLayout from './components/layout'
 import './App.css'
 import Login from './pages/login/login'
-import { Button } from 'antd'
+import { Spin } from 'antd'
 import * as dd from "dingtalk-jsapi";
 import { dingtalkGetConfigInfo, dingtalkGetUserInfo } from './api/api'
-
 
 function App (props) {
   const { location, history, match } = props

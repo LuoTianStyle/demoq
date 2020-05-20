@@ -9,7 +9,7 @@ import * as dd from "dingtalk-jsapi";
 import ShareModal from './shareModal'
 import GLOBAL from './../../utils/utils'
 function TableDropDown (props) {
-  const { children, record, type } = props
+  const { children, record, type, downloadFile } = props
   const [reNameShow, setReNameShow] = useState(false)
   const [tagShow, setTagShow] = useState(false)
   const [moveShow, setMoveShow] = useState(false)
@@ -51,60 +51,15 @@ function TableDropDown (props) {
       }
     })
   }
-  const downloadFile = () => {
-    if (record.processInstanceId) {
-      if (dd.env.platform === "notInDingTalk") {
-        message.warn('请在钉钉中打开')
-      } else {
-        if (!localStorage.getItem('ddUserInfo')) {
-          localStorage.setItem('userData', '');
-          localStorage.setItem('ddUserInfo', '');
-          location.reload();
-        }
-        fileDownloadDD({
-          uuid: record.uuid,
-          dingtalkUserId: JSON.parse(localStorage.getItem('ddUserInfo')).userid
-        }).then(res => {
-          const { spaceId,
-            fileId,
-            fileName,
-            fileSize,
-            fileType, } = res.data
-          dd.biz.cspace.preview({
-            corpId: JSON.parse(localStorage.getItem('ddUserInfo')).corpId,
-            spaceId,
-            fileId,
-            fileName,
-            fileSize,
-            fileType,
-            onSuccess: function () {
-
-              //无，直接在native显示文件详细信息
-            },
-            onFail: function (err) {
-              message.error('网络错误请求失败')
-              // 无，直接在native页面显示具体的错误
-            }
-          });
-        })
-        /*
-        钉钉下载
-        */
-      }
-    } else {
-      window.open(`${GLOBAL.apiUrl}/file/download?uuid=${record.uuid}&token=${JSON.parse(localStorage.getItem('userData')).token}`)
-    }
-
-  }
   const menu = (
     <Menu>
       <Menu.Item key="0" onClick={() => { setReNameShow(true) }}>
         重命名
       </Menu.Item>
       {record.folder === 1 ?
-        <Menu.Item onClick={() => { downloadFile() }} key="1">
-          下载
-    </Menu.Item>
+        <Menu.Item onClick={() => { downloadFile(record) }} key="1">
+          {record.processInstanceId ? '查看' : '下载'}
+        </Menu.Item>
         : null}
       <Menu.Item onClick={() => { setTagShow(true) }} key="2">
         标签
