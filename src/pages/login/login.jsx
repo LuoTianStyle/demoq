@@ -4,15 +4,16 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { userLogin } from './../../api/api'
 import styled from 'styled-components'
+import './login.css'
+// import bj from './../../assets/bj'
 const LoginLayout = styled.div`
 background: #ffffff;
     padding: 40px 40px;
-    border-radius: 4px;
+    border-radius: 20px;
     box-shadow: 0 -25px 37.7px 11.3px rgba(8,143,220,0.07);
 
 `
 const MainLayout = styled.div`
-background:#eeeeee;
 height:100vh;
 display: flex;
 justify-content: center;
@@ -40,7 +41,7 @@ function Login (props) {
     }).catch()
   }
   return (
-    <MainLayout>
+    <MainLayout className='loginBg'>
       <LoginLayout>
         <h1 style={{ textAlign: 'center' }}>NOBOOK云合同</h1><span style={{ display: 'none' }}>123123123</span>
         <Form
@@ -68,7 +69,7 @@ function Login (props) {
           <Form.Item >
             <Button
               onClick={() => { submit() }}
-              style={{ margin: '0 auto', display: 'block' }}
+              style={{ margin: '0 auto', display: 'block', width: '100%' }}
               type="primary"
               htmlType="submit"
               className="login-form-button">

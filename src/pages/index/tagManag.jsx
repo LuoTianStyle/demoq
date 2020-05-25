@@ -12,6 +12,7 @@ function TagManage (props) {
   const docContext = useContext(DocContext)
   useEffect(() => {
     if (show) {
+      form.resetFields()
       setSelectLoading(true)
       tagGetList().then(res => {
         if (res.code === 0) {
@@ -20,7 +21,7 @@ function TagManage (props) {
         }
       }).catch(() => { setSelectLoading(false) })
     }
-  }, [show])
+  }, [form, show])
   const submit = () => {
     setLoading(true)
     form.validateFields().then(res => {

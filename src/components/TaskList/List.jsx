@@ -41,7 +41,7 @@ function NbList (props) {
           </div>
             </div>
             <div style={{ height: '50%' }}>
-              <div><Progress style={{ width: '70%', marginRight: 18 }} percent={Math.floor(item.percent * 100) / 100} status={(() => {
+              <div><Progress style={{ width: '65%', marginRight: 18 }} percent={Math.floor(item.percent * 100) / 100} status={(() => {
                 if (item.status === 'success' && item.percent === 100) {
                   return 'success'
                 }
@@ -112,7 +112,7 @@ function NbList (props) {
           </div>
             </div>
             <div style={{ height: '50%' }}>
-              <div><Progress style={{ width: '70%', marginRight: 18 }} percent={Math.floor(item.percent * 100) / 100} status={(() => {
+              <div><Progress style={{ width: '65%', marginRight: 18 }} percent={Math.floor(item.percent * 100) / 100} status={(() => {
                 if (item.status === 'success' && item.percent === 100) {
                   return 'success'
                 }

@@ -5,6 +5,11 @@ function EditTag (props) {
   const { show, setShow, fetch, record } = props
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    if (show) {
+      form.resetFields()
+    }
+  }, [form, show])
   const submit = () => {
     setLoading(true)
     form.validateFields().then(
@@ -25,6 +30,7 @@ function EditTag (props) {
   return (
     <div>
       <Modal
+        destroyOnClose
         confirmLoading={loading}
         title='修改标签'
         visible={show}

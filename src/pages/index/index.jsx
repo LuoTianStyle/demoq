@@ -80,6 +80,7 @@ function Index () {
   const downloadFile = (record) => {
 
     if (record.processInstanceId) {
+      //钉钉文件
       if (dd.env.platform === "notInDingTalk") {
         message.warn('请在钉钉中打开')
       } else {
@@ -98,6 +99,7 @@ function Index () {
             fileName,
             fileSize,
             fileType, } = res.data
+          setGlobalLoading(false)
           dd.biz.cspace.preview({
             corpId: JSON.parse(localStorage.getItem('ddUserInfo')).corpId,
             spaceId,
@@ -107,22 +109,15 @@ function Index () {
             fileType,
             onSuccess: function () {
               setGlobalLoading(false)
-
-              //无，直接在native显示文件详细信息
             },
             onFail: function (err) {
               setGlobalLoading(false)
-
               message.error('网络错误请求失败')
-              // 无，直接在native页面显示具体的错误
             }
-          });
-        }).catch(() => {
+          })
+        }).catch((res) => {
           setGlobalLoading(false)
         })
-        /*
-        钉钉下载
-        */
       }
     } else {
       window.open(`${GLOBAL.apiUrl}/file/download?uuid=${record.uuid}&token=${JSON.parse(localStorage.getItem('userData')).token}`)
@@ -140,7 +135,7 @@ function Index () {
         }
       }
     },
-    { title: '添加时间', dataIndex: 'createAt', render: (e) => <span>{GLOBAL.toTime(e * 1000, 1)}</span> },
+    { title: '添加时间', dataIndex: 'createAt', render: e => (<span>{GLOBAL.toTime(e * 1000, 1)}</span>) },
     { title: '标签', dataIndex: 'tags', render: e => e.map(item => <Tag key={item.id} color="blue">{item.name}</Tag>) },
     {
       title: '操作', dataIndex: 'action', render: (_, record) => {
@@ -158,7 +153,6 @@ function Index () {
   ]
   return (
     <DocContext.Provider value={{ breadPath, enterDir, currentPath }}>
-
       <div>
         <Control
           fetchData={() => { enterDir(currentPath) }}

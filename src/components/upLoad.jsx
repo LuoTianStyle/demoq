@@ -18,6 +18,7 @@ class NbUpload extends React.Component {
     multiple: true,
     showUploadList: false,
     beforeUpload: (file) => {
+      debugger
       const hash = GLOBAL.createHash(32)
       const params = {
         resource_name: file.name,
@@ -155,6 +156,8 @@ class NbUpload extends React.Component {
       <span>
         <Upload
           {...this.uploadProps}
+          accept='.doc,.docx,.dotx,.xlsx,.xltx,.potx,.ppsx,.pptx,.ppt,.sldx,.xlsm,.xlxb,.txt,.pdf,.jpg,.jpeg,.jpe,.png,.bmp,.psd,.mp3,.wmv,.mp4,.avi,.wmv,.zip,.rar'
+
         >
           <Button style={this.props.style}>
             {this.props.children}
@@ -170,7 +173,7 @@ class NbUpload extends React.Component {
             this.setState({ taskPaneCollapsed: e })
           }}
         />
-      </span>
+      </span >
 
     )
   }

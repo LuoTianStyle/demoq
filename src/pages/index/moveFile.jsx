@@ -11,8 +11,8 @@ import DocContext from './context';
 function MoveFile (props) {
   const { record, show, setShow, type, fetchSearchData, selectedRows } = props
   const [newDirShow, setNewDirShow] = useState(false)
-  const [activeId, setActiveId] = useState(0)
-  const [treeData, settreeData] = useState([{ title: '我的文档', icon: <FolderTwoTone />, key: '0', children: [] }])
+  const [activeId, setActiveId] = useState('0')
+  const [treeData, settreeData] = useState([{ title: '云盘', icon: <FolderTwoTone />, key: '0', children: [] }])
   const [treeLoading, setTreeLoading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [expandedKeys, setExpandedKeys] = useState([])
@@ -40,25 +40,23 @@ function MoveFile (props) {
         setExpandedKeys(GLOBAL.getParentPath(currentData, id, 'key'))
       }
       setTreeLoading(false)
-
     }).catch(() => {
       setTreeLoading(false)
     })
   }
   useEffect(() => {
     if (show) {
-
       fetchData()
     }
   }, [show])
   const submit = () => {
     setLoading(true)
     const params = { ids: record ? [record.id] : selectedRows, parentId: activeId }
-    fileMove(params).then(res => {
+    fileMove(params).then(() => {
       if (type === 'search') {
         fetchSearchData()
       } else {
-        const { breadPath, enterDir, currentPath } = docContext
+        const { enterDir, currentPath } = docContext
         enterDir(currentPath)
       }
       message.success('移动成功')
