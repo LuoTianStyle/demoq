@@ -42,7 +42,7 @@ function Login (props) {
   return (
     <MainLayout>
       <LoginLayout>
-        <h1 style={{ textAlign: 'center' }}>NOBOOK云合同</h1>
+        <h1 style={{ textAlign: 'center' }}>NOBOOK云合同</h1><span style={{ display: 'none' }}>123123123</span>
         <Form
           style={{ width: 400 }}
           name="normal_login"
@@ -53,7 +53,7 @@ function Login (props) {
             name="username"
             rules={[{ required: true, message: '请输入用户名' }]}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
           </Form.Item>
           <Form.Item
             name="password"
@@ -62,7 +62,7 @@ function Login (props) {
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="密码"
             />
           </Form.Item>
           <Form.Item >

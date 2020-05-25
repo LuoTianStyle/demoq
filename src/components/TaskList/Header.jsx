@@ -10,11 +10,12 @@ const HeaderText = styled.span`
   font-size: 18px;
   color: #3c414b;
   padding-right: 10px;
+  transition:0.2s
 `;
 
-export default memo(() => (
+export default memo(({ show }) => (
   <HeaderWrapper>
-    <HeaderText>
+    <HeaderText style={!show ? { opacity: 0 } : { opacity: 1 }}>
       任务列表
     </HeaderText>
   </HeaderWrapper>
