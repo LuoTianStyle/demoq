@@ -108,7 +108,7 @@ function System (props) {
       </ControlLayout>
       <Table
         loading={loading}
-        style={{ margin: 50 }}
+        style={{ margin: '0 10px' }}
         columns={columns}
         dataSource={dataSource}
         rowKey="id"

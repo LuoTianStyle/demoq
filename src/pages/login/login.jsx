@@ -10,7 +10,7 @@ const LoginLayout = styled.div`
 background: #ffffff;
     padding: 40px 40px;
     border-radius: 20px;
-    box-shadow: 0 -25px 37.7px 11.3px rgba(8,143,220,0.07);
+    box-shadow: 0 25px 37.7px 11.3px rgba(8,143,220,0.07);
 
 `
 const MainLayout = styled.div`
@@ -43,7 +43,7 @@ function Login (props) {
   return (
     <MainLayout className='loginBg'>
       <LoginLayout>
-        <h1 style={{ textAlign: 'center' }}>NOBOOK云合同</h1><span style={{ display: 'none' }}>123123123</span>
+        <h1 style={{ textAlign: 'center',fontWeight:'bold' }}>云合同</h1><span style={{ display: 'none' }}>123123123</span>
         <Form
           style={{ width: 400 }}
           name="normal_login"

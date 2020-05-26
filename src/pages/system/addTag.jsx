@@ -5,6 +5,12 @@ function AddTag (props) {
   const { show, setShow, fetch } = props
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    if (show) {
+      form.resetFields()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show])
   const submit = () => {
     setLoading(true)
     form.validateFields().then(

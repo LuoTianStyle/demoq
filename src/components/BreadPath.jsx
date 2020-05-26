@@ -16,7 +16,7 @@ function BreadPath (props) {
           <Breadcrumb.Item key={item.folderId} onClick={() => {
             enterDir({ folderId: item.folderId, name: item.name }, 1, 10)
           }}>
-            <BreadItem> {item.name}</BreadItem>
+            <BreadItem style={{ color: '#1890ff' }}> {item.name}</BreadItem>
           </Breadcrumb.Item>
         ))}
       </Breadcrumb>

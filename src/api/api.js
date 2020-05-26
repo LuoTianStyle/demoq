@@ -131,3 +131,9 @@ export const fileDownloadDD = params => {
     params
   }).then(res => res.data);
 };
+//删除分享
+export const fileDelShare = params => {
+  return axios.post(`${path}/file/delShare`,
+    params
+  ).then(res => res.data);
+};

@@ -129,14 +129,17 @@ function Index () {
         if (record.folder === 2) {
           return <NameStyle onClick={() => {
             enterDir({ folderId: record.id, name: e }, 1, 10)
-          }}><FolderTwoTone />{e}</NameStyle>
+          }}><FolderTwoTone style={{ marginRight: 5, fontSize: 18 }} />{e}</NameStyle>
         } else {
-          return <NameStyle onClick={() => { downloadFile(record) }}><FileExcelTwoTone twoToneColor='#E9967A' />{e}</NameStyle>
+          return <NameStyle onClick={() => { downloadFile(record) }}><FileExcelTwoTone style={{ marginRight: 5, fontSize: 18 }} twoToneColor='#E9967A' />{e}</NameStyle>
         }
       }
     },
     { title: '添加时间', dataIndex: 'createAt', render: e => (<span>{GLOBAL.toTime(e * 1000, 1)}</span>) },
-    { title: '标签', dataIndex: 'tags', render: e => e.map(item => <Tag key={item.id} color="blue">{item.name}</Tag>) },
+    {
+      title: '标签', dataIndex: 'tags',
+      render: e => <div style={{ maxWidth: 300, lineHeight: '30px' }}>{e.map(item => <Tag key={item.id} color="blue">{item.name}</Tag>)}</div>
+    },
     {
       title: '操作', dataIndex: 'action', render: (_, record) => {
         return <NameStyle>
@@ -161,7 +164,7 @@ function Index () {
           selectedRows={selectedRows}
           setSelectedRows={setSelectedRows}
         />
-        <div style={{ margin: '0 10px', background: '#fff' }}>
+        <div style={{ margin: '0px 10px', padding: '20px', background: '#fff' }}>
           <BreadPath
             breadPath={breadPath}
             enterDir={enterDir}
@@ -193,6 +196,14 @@ function Index () {
               pageDown(current, size)
             },
             current: pageData.currentPage
+          }}
+          onRow={record => {
+            return {
+              onDoubleClick: (event) => {
+                console.log(event);
+                console.log(record);
+              }
+            }
           }}
         />
         <NewDir
