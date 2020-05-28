@@ -54,7 +54,7 @@ function MoveFile (props) {
   }, [treeData])
   const submit = () => {
     const params = { ids: record ? [record.id] : selectedRows, parentId: activeId }
-    const parentPath = GLOBAL.getParentPath(treeData, params.parentId, 'key').map(item => parseInt(item))
+    const parentPath = GLOBAL.getParentPath(treeData, params.parentId, 'key').map(item => parseInt(item)).concat(params.ids)
     if (GLOBAL.checkAryHasSameItem(parentPath, params.ids)) {
       message.error('不能将文件或文件夹移动到本身的子目录下')
       return

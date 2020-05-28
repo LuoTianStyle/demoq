@@ -9,6 +9,7 @@ function TagManage (props) {
   const [selectLoading, setSelectLoading] = useState(false)
   const [tagList, settagList] = useState([])
   const [form] = Form.useForm();
+  const [initValue, setInitValue] = useState('')
   const docContext = useContext(DocContext)
   useEffect(() => {
     if (show) {
@@ -18,10 +19,12 @@ function TagManage (props) {
         if (res.code === 0) {
           setSelectLoading(false)
           settagList(res.data)
+          setInitValue({ tagIds: record.tags.map(item => item.id) })
         }
       }).catch(() => { setSelectLoading(false) })
     }
-  }, [form, show])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show])
   const submit = () => {
     form.validateFields().then(res => {
       setLoading(true)
@@ -54,13 +57,15 @@ function TagManage (props) {
         onCancel={() => { setShow(false) }}
       >
         <Form
-          initialValues={{ tagIds: record.tags.map(item => item.id) }}
+          initialValues={initValue}
           form={form}
         >
           <Item
             name='tagIds'
             label=''>
             <Select
+              // disabled={selectLoading}
+              // notFoundContent='加载中...'
               mode="multiple"
               style={{ width: '100%' }}
               placeholder="请选择标签"
