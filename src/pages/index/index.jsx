@@ -197,14 +197,14 @@ function Index () {
             },
             current: pageData.currentPage
           }}
-          onRow={record => {
-            return {
-              onDoubleClick: (event) => {
-                console.log(event);
-                console.log(record);
-              }
-            }
-          }}
+        // onRow={record => {
+        //   return {
+        //     onDoubleClick: (event) => {
+        //       console.log(event);
+        //       console.log(record);
+        //     }
+        //   }
+        // }}
         />
         <NewDir
           show={dirShow}

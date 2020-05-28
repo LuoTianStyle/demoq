@@ -23,8 +23,8 @@ function TagManage (props) {
     }
   }, [form, show])
   const submit = () => {
-    setLoading(true)
     form.validateFields().then(res => {
+      setLoading(true)
       const params = { tagIds: res.tagIds, id: record.id }
       fileEidtTag(params).then(res => {
         message.success('修改成功')
@@ -45,6 +45,7 @@ function TagManage (props) {
   return (
     <div>
       <Modal
+        maskClosable={false}
         confirmLoading={loading}
         destroyOnClose={true}
         visible={show}

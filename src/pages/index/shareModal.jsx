@@ -7,7 +7,7 @@ import GLOBAL from '../../utils/utils'
 import copy from 'copy-to-clipboard';
 function ShareModal (props) {
   const { fetchSearchData, type, show, setShow, record } = props
-  const [fileInfo, setFileInfo] = useState({ isShare: false, uuid: '', password: '', termStatus: 1, length: 0 })
+  const [fileInfo, setFileInfo] = useState({ isShare: false, uuid: '', password: '', termStatus: 1, length: 1 })
   const [loading, setLoading] = useState(false)
   const [spinning, setspinning] = useState(false)
   useEffect(() => {
@@ -47,6 +47,7 @@ function ShareModal (props) {
     }
   }, [show])
   const submit = () => {
+    debugger
     if (fileInfo.isShare) {
       setLoading(true)
       const params = {
@@ -80,7 +81,7 @@ function ShareModal (props) {
   }
 
   const copyUrl = () => {
-    if (copy(`${GLOBAL.apiUrl}/#/download/${fileInfo.shortId}`)) {
+    if (copy(`${GLOBAL.url}/#/download/${fileInfo.shortId}`)) {
       message.success('复制成功')
     }
   }
@@ -103,7 +104,7 @@ function ShareModal (props) {
             <td>密码</td>
           </tr>
           <tr>
-            <td style={{ width: '65%' }}>{GLOBAL.apiUrl}/#/download/{fileInfo.shortId}<CopyOutlined onClick={copyUrl} style={{ cursor: 'pointer' }} /> </td>
+            <td style={{ width: '65%' }}>{GLOBAL.url}/#/download/{fileInfo.shortId}<CopyOutlined onClick={copyUrl} style={{ cursor: 'pointer' }} /> </td>
             <td style={{ textAlign: 'center' }}>{fileInfo.password}</td>
           </tr>
           <tr style={{ background: '#ccc' }}>
@@ -126,7 +127,7 @@ function ShareModal (props) {
               style={{ width: '100%', marginTop: 10 }}
               onChange={(e) => {
                 if (e === 'custom') {
-                  setFileInfo({ ...fileInfo, isCustom: true, length: 0 })
+                  setFileInfo({ ...fileInfo, isCustom: true, length: 1 })
                 } else {
                   setFileInfo({ ...fileInfo, isCustom: false, length: e })
                 }

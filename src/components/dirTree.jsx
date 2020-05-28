@@ -17,7 +17,7 @@ function DirTree (props) {
         spinning={loading}
       >
         {loading ? null : <Tree
-          onExpand={(e) => { console.log(e); setExpandedKeys(e) }}
+          onExpand={(e) => { setExpandedKeys(e) }}
           showIcon
           expandedKeys={expandedKeys}
           selectedKeys={[activeId]}

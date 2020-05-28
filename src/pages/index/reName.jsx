@@ -10,8 +10,8 @@ function ReName (props) {
 
   const [form] = Form.useForm();
   const submit = (e) => {
-    setLoading(true)
     form.validateFields().then(values => {
+      setLoading(true)
       const params = { id: record.id, name: values.name, parentId: record.parentId }
       folderEdit(params).then(res => {
         message.success('修改成功')
@@ -45,8 +45,10 @@ function ReName (props) {
           <Item
             name='name'
             label=''
-            rules={[{ required: true, message: "名字不能为空" },
-            { max: 20, message: '名字不能超过20个字符' }
+            rules={[
+              { required: true, message: "名字不能为空" },
+              { max: 20, message: '名字不能超过20个字符' },
+              { whitespace: true, message: '名称不能为空格' }
             ]}>
             <Input />
           </Item>

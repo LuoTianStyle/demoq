@@ -63,6 +63,20 @@ const GLOBAL = {
 
     return hs.join('');
   },
-  apiUrl: 'http://file.nobook.cc'
+  checkAryHasSameItem: (ary1, ary2) => {
+    if (ary1.constructor !== Array || ary2.constructor !== Array) {
+      console.error('参数为两个数组!')
+      return
+    }
+    const oldLength = ary1.length + ary2.length
+    const res = [...ary1, ...ary2]
+    if (Array.from(new Set(res)).length < oldLength) {
+      return true
+    } else {
+      return false
+    }
+  },
+  apiUrl: 'http://file.nobook.cc',
+  url: 'http://contract.nobook.cc'
 }
 export default GLOBAL

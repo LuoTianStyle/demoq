@@ -20,7 +20,8 @@ function Control ({ setDirShow, currentPath, fetchData, history, selectedRows })
     }).catch()
   }, [])
   const search = () => {
-    const params = [{ searchColumn, searchValue, searchOperator: searchColumn === 'name' ? 'like' : '=' }].concat(dateSearchData)
+    const params = [{ searchColumn, searchValue, searchOperator: searchColumn === 'name' ? 'like' : '=' },
+    { searchColumn: 'folder', searchValue: 1, searchOperator: '=' }].concat(dateSearchData)
     history.push(`/search/${JSON.stringify(params)}`)
   }
   return (

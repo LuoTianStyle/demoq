@@ -6,8 +6,8 @@ function NewDir (props) {
   const [loading, setLoading] = useState(false)
   const [form] = Form.useForm()
   const submit = () => {
-    setLoading(true)
     form.validateFields().then(values => {
+      setLoading(true)
       const params = { parentId, name: values.name }
       folderInsert(params).then(res => {
         if (res.code === 0) {
@@ -40,7 +40,11 @@ function NewDir (props) {
       <Form
         form={form}
       >
-        <Form.Item name='name' rules={[{ required: true, message: '文件夹名不能为空' }, { max: 20, message: '文件夹名称不能超过20个字符' }]}>
+        <Form.Item name='name' rules={[
+          { required: true, message: '文件夹名不能为空' },
+          { max: 20, message: '文件夹名称不能超过20个字符' },
+          { whitespace: true, message: '文件夹名称不能为空格' }
+        ]}>
           <Input placeholder='请输入文件夹名' />
         </Form.Item>
       </Form>

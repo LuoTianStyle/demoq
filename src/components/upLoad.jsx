@@ -17,8 +17,11 @@ class NbUpload extends React.Component {
   uploadProps = {
     multiple: true,
     showUploadList: false,
-    beforeUpload: (file) => {
-      debugger
+    beforeUpload: (file, fileList) => {
+      if (file.size === 0) {
+        message.error('文件大小为空')
+        return false
+      }
       const hash = GLOBAL.createHash(32)
       const params = {
         resource_name: file.name,
@@ -29,7 +32,7 @@ class NbUpload extends React.Component {
         if (res.code === 0) {
           const preprocessTask = {
             ...res.data,//chunkSize: 每块大小 groupSubDir: 块文件夹  resourceExt:类型  resourceTempBaseName:资源名 savedPath: 保存地址
-            status: 'ready', // ready:准备上传 pause:暂停 failed:失败 success:成功
+            status: 'pause', // ready:准备上传 pause:暂停 failed:失败 success:成功
             chunk_index: 0,//当前传输块
             file,//文件
             chunk_total: Math.ceil(file.size / res.data.chunkSize),
@@ -39,8 +42,9 @@ class NbUpload extends React.Component {
             currentPath: this.props.currentPath
           }
           this.setState({ uploadQueue: [...this.state.uploadQueue, preprocessTask] }, () => {
+            console.log(this.state.uploadQueue);
             this.setState({ taskPaneCollapsed: true })
-            this.uploadChunk(hash)
+            // this.uploadChunk(hash)
           })
         }
         return false

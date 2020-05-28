@@ -11,9 +11,10 @@ function EditTag (props) {
     }
   }, [form, show])
   const submit = () => {
-    setLoading(true)
     form.validateFields().then(
       values => {
+        setLoading(true)
+
         tagEdit({ id: record.id, name: values.name }).then(res => {
           if (res.code === 0) {
             message.success('修改成功')

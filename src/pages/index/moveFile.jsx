@@ -49,9 +49,17 @@ function MoveFile (props) {
       fetchData()
     }
   }, [show])
+  useEffect(() => {
+    console.log(treeData);
+  }, [treeData])
   const submit = () => {
-    setLoading(true)
     const params = { ids: record ? [record.id] : selectedRows, parentId: activeId }
+    const parentPath = GLOBAL.getParentPath(treeData, params.parentId, 'key').map(item => parseInt(item))
+    if (GLOBAL.checkAryHasSameItem(parentPath, params.ids)) {
+      message.error('不能将文件或文件夹移动到本身的子目录下')
+      return
+    }
+    setLoading(true)
     fileMove(params).then(() => {
       if (type === 'search') {
         fetchSearchData()
@@ -70,6 +78,7 @@ function MoveFile (props) {
   return (
     <div>
       <Modal
+        destroyOnClose
         confirmLoading={loading}
         title='移动'
         visible={show}
