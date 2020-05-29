@@ -30,7 +30,7 @@ function Index () {
   }, [])
 
   //进入文件夹
-  const enterDir = (path, page, perPage) => {
+  const enterDir = (path, page = 1, perPage = 10) => {
     const searchParam = [{ searchColumn: 'parentId', searchOperator: '=', searchValue: path.folderId }]
     if (page) {
       setPageData({ ...pageData, page })
@@ -52,6 +52,9 @@ function Index () {
     }
     setCurrentPath({ folderId: path.folderId, name: path.name })
     setBreadPath(oldPath)
+    console.log(dataSource);
+    console.log(pageData);
+
     fetchData(params)
   }
   //翻页
@@ -155,10 +158,10 @@ function Index () {
     }
   ]
   return (
-    <DocContext.Provider value={{ breadPath, enterDir, currentPath }}>
+    <DocContext.Provider value={{ breadPath, enterDir, currentPath, pageData }}>
       <div>
         <Control
-          fetchData={() => { enterDir(currentPath) }}
+          fetchData={() => { enterDir(currentPath, pageData.page, pageData.perPage) }}
           currentPath={currentPath}
           setDirShow={setDirShow}
           selectedRows={selectedRows}

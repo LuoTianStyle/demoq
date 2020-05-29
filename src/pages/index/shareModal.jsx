@@ -47,7 +47,7 @@ function ShareModal (props) {
     }
   }, [show])
   const submit = () => {
-    debugger
+
     if (fileInfo.isShare) {
       setLoading(true)
       const params = {
@@ -138,7 +138,7 @@ function ShareModal (props) {
               <Select.Option value={'custom'}>自定义</Select.Option>
             </Select>
             : null}
-          {fileInfo.isCustom ?
+          {fileInfo.isCustom && fileInfo.termStatus === 1 ?
             <InputNumber
               max={10000}
               min={1}

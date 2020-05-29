@@ -19,7 +19,12 @@ function NbList (props) {
         {data.filter(i => i.status !== 'success').length > 0 ?
           data.filter(i => i.status !== 'success').map(item => (<ListItem key={item.hash} >
             <div style={{ height: '50%', }}>
-              <div style={{ float: 'left' }}>
+              <div style={{
+                float: 'left',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap', width: '70%',
+                overflow: 'hidden'
+              }}>
                 {(() => {
                   switch (item.status) {
                     case 'success':
@@ -89,8 +94,13 @@ function NbList (props) {
       } : {}}>
         {data.filter(i => i.status === 'success').length > 0 ?
           data.filter(i => i.status === 'success').map(item => (<ListItem key={item.hash} >
-            <div style={{ height: '50%' }}>
-              <div style={{ float: 'left' }}>
+            <div style={{ height: '50%', }}>
+              <div style={{
+                float: 'left',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap', width: '70%',
+                overflow: 'hidden'
+              }}>
                 {(() => {
                   switch (item.status) {
                     case 'success':

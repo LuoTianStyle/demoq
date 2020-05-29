@@ -9,6 +9,9 @@ function Download ({ match }) {
   const [loading, setloading] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
   const [fileInfo, setfileInfo] = useState({})
+  useEffect(() => {
+    console.log(fileInfo);
+  }, [fileInfo])
   const submit = () => {
     setloading(false)
     const params = {
@@ -39,7 +42,7 @@ function Download ({ match }) {
           文件大小:{Math.floor(fileInfo.size / 1024 / 1024 * 100) / 100}MB
         </div>
         <div style={{ margin: 40 }}>
-          到期时间:{GLOBAL.toTime(fileInfo.expireTime * 1000)}
+          到期时间:{fileInfo.termStatus === 1 ? GLOBAL.toTime(fileInfo.expireTime * 1000) : '永久'}
         </div>
         <div style={{ margin: 40 }}>
           <Button type='primary' style={{ float: 'right' }} onClick={() => { downloadFile() }}>下载</Button>

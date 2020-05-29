@@ -61,9 +61,10 @@ function TableDropDown (props) {
           {record.processInstanceId ? '查看' : '下载'}
         </Menu.Item>
         : null}
-      <Menu.Item onClick={() => { setTagShow(true) }} key="2">
+      {record.folder === 1 ? <Menu.Item onClick={() => { setTagShow(true) }} key="2">
         标签
-      </Menu.Item>
+      </Menu.Item> : null}
+
       {record.folder === 1 && !record.processInstanceId ?
         <Menu.Item key="5" onClick={() => { setShareShow(true) }}>
           分享

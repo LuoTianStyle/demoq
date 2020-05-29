@@ -20,8 +20,8 @@ function ReName (props) {
         if (type === 'search') {
           fetchSearchData()
         } else {
-          const { breadPath, enterDir, currentPath } = docContext
-          enterDir(currentPath)
+          const { breadPath, enterDir, currentPath, pageData } = docContext
+          enterDir(currentPath, pageData.page, pageData.perPage)
         }
       })
     }).catch(info => {

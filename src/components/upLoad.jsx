@@ -18,6 +18,10 @@ class NbUpload extends React.Component {
     multiple: true,
     showUploadList: false,
     beforeUpload: (file, fileList) => {
+      if (fileList.length > 10) {
+        message.error('单次上传不能超过10个文件')
+        return false
+      }
       if (file.size === 0) {
         message.error('文件大小为空')
         return false
@@ -32,7 +36,7 @@ class NbUpload extends React.Component {
         if (res.code === 0) {
           const preprocessTask = {
             ...res.data,//chunkSize: 每块大小 groupSubDir: 块文件夹  resourceExt:类型  resourceTempBaseName:资源名 savedPath: 保存地址
-            status: 'pause', // ready:准备上传 pause:暂停 failed:失败 success:成功
+            status: 'ready', // ready:准备上传 pause:暂停 failed:失败 success:成功
             chunk_index: 0,//当前传输块
             file,//文件
             chunk_total: Math.ceil(file.size / res.data.chunkSize),
@@ -44,7 +48,8 @@ class NbUpload extends React.Component {
           this.setState({ uploadQueue: [...this.state.uploadQueue, preprocessTask] }, () => {
             console.log(this.state.uploadQueue);
             this.setState({ taskPaneCollapsed: true })
-            // this.uploadChunk(hash)
+            this.uploadChunk(hash)
+
           })
         }
         return false

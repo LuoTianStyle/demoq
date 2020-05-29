@@ -76,7 +76,9 @@ const GLOBAL = {
       return false
     }
   },
-  apiUrl: 'http://file.nobook.cc',
-  url: 'http://contract.nobook.cc'
+  // apiUrl: 'http://file.nobook.cc',
+  apiUrl: 'https://contract.nobook.com/nbapi',
+  // url: 'http://contract.nobook.cc'
+  url: 'https://contract.nobook.com'
 }
 export default GLOBAL
