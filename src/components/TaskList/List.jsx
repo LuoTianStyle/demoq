@@ -70,7 +70,7 @@ function NbList (props) {
                       </span>
                     case 'pause':
                       return <span>
-                        <Button size='small' style={{ marginRight: 5 }} onClick={() => { retryItem(item.hash) }}>开始</Button>
+                        <Button size='small' style={{ marginRight: 5 }} loading={item.loading} onClick={() => { retryItem(item.hash) }}>开始</Button>
                         <Button danger size='small' onClick={() => { deleteItem(item.hash) }}>取消</Button>
                       </span>
                     case 'failed':

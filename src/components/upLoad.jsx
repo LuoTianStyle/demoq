@@ -43,7 +43,8 @@ class NbUpload extends React.Component {
             hash,
             chunkCount: Math.ceil(file.size / res.data.chunkSize),
             percent: 0,
-            currentPath: this.props.currentPath
+            currentPath: this.props.currentPath,
+            loading: false
           }
           this.setState({ uploadQueue: [...this.state.uploadQueue, preprocessTask] }, () => {
             console.log(this.state.uploadQueue);
@@ -77,6 +78,7 @@ class NbUpload extends React.Component {
           const newMask = currentMask
           newMask.percent = ((newMask.chunk_index + 1) / newMask.chunk_total) * 99
           newMask.chunk_index += 1
+          newMask.loading = false
           const newUploadQueue = [...this.state.uploadQueue]
           const currentIndex = newUploadQueue.findIndex(item => item.hash === hash)
           newUploadQueue[currentIndex] = newMask
@@ -99,6 +101,7 @@ class NbUpload extends React.Component {
         } else {
           const newMask = currentMask
           newMask.percent = ((newMask.chunk_index + 1) / newMask.chunk_total) * 99
+          newMask.loading = false
           const newUploadQueue = [...this.state.uploadQueue]
           const currentIndex = newUploadQueue.findIndex(item => item.hash === hash)
           newUploadQueue[currentIndex] = newMask
@@ -124,6 +127,7 @@ class NbUpload extends React.Component {
     }).catch((e) => {
       const newMask = this.state.uploadQueue.find(item => item.hash === hash)
       newMask.status = 'failed'
+      newMask.loading = false
       const newUploadQueue = [...this.state.uploadQueue]
       const currentIndex = newUploadQueue.findIndex(item => item.hash === hash)
       newUploadQueue[currentIndex] = newMask
@@ -133,6 +137,7 @@ class NbUpload extends React.Component {
   pauseItem = (hash) => {
     const newMask = this.state.uploadQueue.find(item => item.hash === hash)
     newMask.status = 'pause'
+    newMask.loading = true
     const newUploadQueue = [...this.state.uploadQueue]
     const currentIndex = newUploadQueue.findIndex(item => item.hash === hash)
     newUploadQueue[currentIndex] = newMask
@@ -140,10 +145,10 @@ class NbUpload extends React.Component {
   }
   retryItem = (hash) => {
     const newMask = this.state.uploadQueue.find(item => item.hash === hash)
-    if (newMask.chunk_index === (newMask.chunk_total - 1)) {
-      message.success('文件上传成功 无法暂停')
-      return
-    }
+    // if (newMask.chunk_index === (newMask.chunk_total - 1)) {
+    //   message.success('文件上传成功 无法暂停')
+    //   return
+    // }
     newMask.status = 'ready'
     const newUploadQueue = [...this.state.uploadQueue]
     const currentIndex = newUploadQueue.findIndex(item => item.hash === hash)
