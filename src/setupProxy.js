@@ -3,7 +3,7 @@ const {
 } = require('http-proxy-middleware');
 module.exports = function (app) {
   app.use(createProxyMiddleware('/api', {
-    target: 'http://file.nobook.cc/',
+    target: 'http://pan.ciyun.vip/',
     secure: false,
     changeOrigin: true,
     pathRewrite: {

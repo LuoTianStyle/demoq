@@ -6,7 +6,6 @@ const path = 'api'
 axios.interceptors.request.use(function (data) {
   if (localStorage.getItem('userData') !== '' && localStorage.getItem('userData')) {
     data.headers.common['token'] = JSON.parse(localStorage.getItem('userData')).token;
-    // data.headers.common['token'] = 123456
   }
   return data
 });
@@ -89,11 +88,20 @@ export const fileMove = params => {
 export const userLogin = params => {
   return axios.post(`${path}/login/username`, params).then(res => res.data);
 };
+// 允许注册
+export const isRegister = params => {
+  return axios.get(`${path}/site/index`, params).then(res => res.data);
+};
+// 注册
+export const userRegister = params => {
+  return axios.post(`${path}/login/register`, params).then(res => res.data);
+};
+
 //修改密码
 export const userEditPassword = params => {
   return axios.post(`${path}/user/editPassword`, params).then(res => res.data);
 };
-//修改密码
+// 退出
 export const userLogout = params => {
   return axios.post(`${path}/user/logout`, params).then(res => res.data);
 };

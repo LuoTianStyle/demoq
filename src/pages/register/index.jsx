@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { userLogin, isRegister } from './../../api/api';
+import { userRegister } from '../../api/api';
 import styled from 'styled-components';
-import './login.css';
-const LoginLayout = styled.div`
+import './index.css';
+const RegisterLayout = styled.div`
 	background: #ffffff;
 	padding: 40px 40px;
 	border-radius: 20px;
@@ -17,18 +17,14 @@ const MainLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 `;
-function Login(props) {
-  const { history } = props;
-  const [allow, setAllow] = useState(true);
+function Register(props) {
+	const { history } = props;
 	const login = res => {
-		const params = { username: res.username, password: res.password };
-		userLogin(params).then(res => {
+		const params = { email: res.email, password: res.password };
+		userRegister(params).then(res => {
 			if (res.code === 0) {
-				const storage = window.localStorage;
-				const token = res.data;
-				storage.setItem('userData', JSON.stringify(token));
-				history.push('/');
-				window.location.reload();
+				message.success('注册成功，请登录');
+				history.push('/login');
 			}
 		});
 	};
@@ -39,18 +35,10 @@ function Login(props) {
 				login(res);
 			})
 			.catch();
-  };
-  useEffect(() => {
-    // isRegister().then(res => {
-		// 	if (res.code === 0) {
-		// 		setAllow(res.data.register);
-		// 	}
-		// });
-  }, [])
-  
+	};
 	return (
 		<MainLayout className='loginBg'>
-			<LoginLayout>
+			<RegisterLayout>
 				<h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>
 					云合同
 				</h1>
@@ -62,14 +50,14 @@ function Login(props) {
 					form={form}
 				>
 					<Form.Item
-						name='username'
-						rules={[{ required: true, message: '请输入用户名' }]}
+						name='email'
+						rules={[{ required: true, message: '请输入邮箱' }]}
 					>
 						<Input
 							prefix={
 								<UserOutlined className='site-form-item-icon' />
 							}
-							placeholder='用户名'
+							placeholder='邮箱'
 						/>
 					</Form.Item>
 					<Form.Item
@@ -98,13 +86,13 @@ function Login(props) {
 							htmlType='submit'
 							className='login-form-button'
 						>
-							登录
+							注册
 						</Button>
 					</Form.Item>
 				</Form>
-        {allow?<div>没有账号？<Link to='/register'>注册账号</Link></div> :null}
-			</LoginLayout>
+        <div>已有账号？<Link to='/register'>登录</Link></div>
+			</RegisterLayout>
 		</MainLayout>
 	);
 }
-export default withRouter(Login);
+export default withRouter(Register);
