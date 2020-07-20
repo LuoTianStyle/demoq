@@ -1,72 +1,63 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useContext } from 'react';
-import {
-	HashRouter as Router,
-	Route,
-	Redirect,
-	withRouter,
-} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { HashRouter as Router, Route, withRouter } from 'react-router-dom';
 import routes from './router/router';
 import UserLayout from './components/layout';
 import './App.css';
-import Login from './pages/login/login';
-import Register from './pages/register';
-import { Spin } from 'antd';
+import Login from './pages/login';
+import Register from './pages/register/index';
 
 function App(props) {
-	const { location, history, match } = props;
+	const { location, history } = props;
 	const [isLogin, setIsLogin] = useState(false);
-	const [isDownload, setIsDownload] = useState(false);
+	const getToken = () => {
+		const userData = window.localStorage.getItem('userData');
+		if (userData && JSON.parse(userData).token) {
+			return JSON.parse(userData);
+		} else {
+			return false;
+		}
+	};
 	useEffect(() => {
-		if (location.pathname.includes('download')) {
+		const path = location.pathname;
+		if (path.includes('download')) {
 			return;
 		}
-		if (
-			location.pathname !== '/login' &&
-			location.pathname !== '/register'
-		) {
-			if (!getToken()) {
+		if (path !== '/login' && path !== '/register') {
+			const userData = getToken();
+			if (!userData) {
 				history.push('/login');
 			}
 		} else {
 			setIsLogin(true);
 		}
 	}, [location]);
-	const getToken = () => {
-		let userData = '';
-		if (
-			window.localStorage.getItem('userData') &&
-			JSON.parse(window.localStorage.getItem('userData')).token
-		) {
-			userData = JSON.parse(window.localStorage.getItem('userData'));
-			return userData;
+	const component = () => {
+		if (location.pathname === '/register') {
+			return <Register />;
+		} else if (location.pathname === '/login') {
+			return <Login />;
+		} else if (!isLogin) {
+			return (
+				<UserLayout show={!location.pathname.includes('download')}>
+					{routes.map(item => {
+						return (
+							<Route
+								Redirect='/'
+								key={item.path}
+								path={item.path}
+								exact
+								component={item.component}
+							/>
+						);
+					})}
+				</UserLayout>
+			);
 		} else {
-			return false;
+			return <Login />;
 		}
 	};
-	return (
-		<Router>
-			<div>
-				{!isLogin ? (
-					<UserLayout show={!location.pathname.includes('download')}>
-						{routes.map(item => {
-							return (
-								<Route
-									Redirect='/'
-									key={item.path}
-									path={item.path}
-									exact
-									component={item.component}
-								></Route>
-							);
-						})}
-					</UserLayout>
-				) : location.pathname === '/register' ?(<Register />):(
-					<Login />
-				)}
-			</div>
-		</Router>
-	);
+	return <Router>{component()}</Router>;
 }
 
 export default withRouter(App);

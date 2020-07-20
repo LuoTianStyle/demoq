@@ -1,10 +1,9 @@
 import React, { useState, } from 'react'
-import { Layout, Modal, Spin } from 'antd';
+import { Layout, Spin } from 'antd';
 import EditPassword from './editPassword'
 import { Link } from 'react-router-dom'
-import { useContext } from 'react';
 import GlobalLoading from './globalContext'
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 function UserLayout (props) {
   const { children, show } = props
   const [editPasswordShow, setEditPasswordShow] = useState(false)
@@ -31,7 +30,7 @@ function UserLayout (props) {
               }}>退出</a>
             </div>
           </Header>
-          <Content style={{ height: 'calc(100vh - 64px)' }}>
+          <Content style={{ minHeight: 'calc(100vh - 64px)' }}>
             {children}
           </Content>
           <EditPassword
@@ -39,7 +38,6 @@ function UserLayout (props) {
             setShow={setEditPasswordShow}
           />
         </Layout> : children}
-
       </Spin>
     </GlobalLoading.Provider >
   );

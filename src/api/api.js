@@ -10,9 +10,8 @@ axios.interceptors.request.use(function (data) {
   return data
 });
 axios.interceptors.response.use(function (response) {
-  if (response.data.code === 403) {
+  if (response.data.code === 4003) {
     localStorage.setItem('userData', '');
-    localStorage.setItem('ddUserInfo', '');
     location.reload();
   } else if (response.data.code === 500) {
     message.error(response.data.msg)
@@ -20,6 +19,26 @@ axios.interceptors.response.use(function (response) {
   }
   return response;
 });
+// 允许注册
+export const isRegister = params => {
+  return axios.get(`${path}/site/index`, params).then(res => res.data);
+};
+// 注册
+export const userRegister = params => {
+  return axios.post(`${path}/login/register`, params).then(res => res.data);
+};
+//登录
+export const userLogin = params => {
+  return axios.post(`${path}/login/username`, params).then(res => res.data);
+};
+//修改密码
+export const userEditPassword = params => {
+  return axios.post(`${path}/user/editPassword`, params).then(res => res.data);
+};
+// 退出
+export const userLogout = params => {
+  return axios.post(`${path}/user/logout`, params).then(res => res.data);
+};
 //文件夹列表
 export const folderGetList = params => {
   return axios.post(`${path}/folder/getList`, params).then(res => res.data);
@@ -84,27 +103,6 @@ export const fileDel = params => {
 export const fileMove = params => {
   return axios.post(`${path}/file/move`, params).then(res => res.data);
 };
-//登录
-export const userLogin = params => {
-  return axios.post(`${path}/login/username`, params).then(res => res.data);
-};
-// 允许注册
-export const isRegister = params => {
-  return axios.get(`${path}/site/index`, params).then(res => res.data);
-};
-// 注册
-export const userRegister = params => {
-  return axios.post(`${path}/login/register`, params).then(res => res.data);
-};
-
-//修改密码
-export const userEditPassword = params => {
-  return axios.post(`${path}/user/editPassword`, params).then(res => res.data);
-};
-// 退出
-export const userLogout = params => {
-  return axios.post(`${path}/user/logout`, params).then(res => res.data);
-};
 //获取分享信息
 export const fileGetShareInfo = params => {
   return axios.get(`${path}/file/getShareInfo`, {
@@ -118,24 +116,6 @@ export const fileShare = params => {
 //修改密码
 export const fileShareDownload = params => {
   return axios.get(`${path}/file/shareDownload`, {
-    params
-  }).then(res => res.data);
-};
-//订定获取签名参数
-export const dingtalkGetConfigInfo = params => {
-  return axios.get(`${path}/dingtalk/getConfigInfo`, {
-    params
-  }).then(res => res.data);
-};
-//订定获取签名参数
-export const dingtalkGetUserInfo = params => {
-  return axios.get(`${path}/dingtalk/getUserInfo`, {
-    params
-  }).then(res => res.data);
-};
-//下载文件
-export const fileDownloadDD = params => {
-  return axios.get(`${path}/file/download`, {
     params
   }).then(res => res.data);
 };

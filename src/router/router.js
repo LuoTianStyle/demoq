@@ -1,5 +1,5 @@
-import Login from './../pages/login/login';
-import Register from './../pages/register/index.jsx';
+import Login from '../pages/login/index.jsx';
+import Register from '../pages/register/index.jsx';
 import Index from './../pages/index/index';
 import System from './../pages/system/system';
 import Search from './../pages/search/index';

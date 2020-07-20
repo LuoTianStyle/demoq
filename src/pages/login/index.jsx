@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { userRegister } from '../../api/api';
+import { userLogin, isRegister } from '../../api/api';
 import styled from 'styled-components';
-import md5 from 'md5';
 import './index.css';
 const MainLayout = styled.div`
 	position: relative;
@@ -142,12 +141,18 @@ const LoginLayout = styled.div`
 `;
 function Login(props) {
 	const { history } = props;
+	const [allow, setAllow] = useState(true);
 	const login = res => {
-		const params = { email: res.email, password: md5(res.password) };
-		userRegister(params).then(res => {
+		const params = { username: res.username, password: res.password };
+		userLogin(params).then(res => {
 			if (res.code === 0) {
-				message.success('注册成功，请登录');
-				history.push('/login');
+				const storage = window.localStorage;
+				const data = res.data;
+				storage.setItem('userData', JSON.stringify(data));
+				setTimeout(() => {
+					history.push('/');
+					window.location.reload();
+				}, 300);
 			}
 		});
 	};
@@ -159,6 +164,15 @@ function Login(props) {
 			})
 			.catch();
 	};
+	useEffect(() => {
+		isRegister().then(res => {
+			if (res.code === 0) {
+				const allow = res.data.register === 1 ? true : false;
+				setAllow(allow);
+			}
+		});
+	}, []);
+
 	return (
 		<MainLayout>
 			<div className='bg-item' />
@@ -182,15 +196,15 @@ function Login(props) {
 						<div className='login-line-active'></div>
 					</div>
 					<Form.Item
-						label='邮箱'
-						name='email'
-						rules={[{ required: true, message: '请输入邮箱' }]}
+						label='用户名'
+						name='username'
+						rules={[{ required: true, message: '请输入用户名' }]}
 					>
 						<Input
 							prefix={
 								<UserOutlined className='site-form-item-icon' />
 							}
-							placeholder='请输入邮箱'
+							placeholder='请输入用户名'
 						/>
 					</Form.Item>
 					<Form.Item
@@ -222,12 +236,14 @@ function Login(props) {
 							htmlType='submit'
 							className='login-form-button'
 						>
-							注册
+							登录
 						</Button>
 					</Form.Item>
-					<div>
-						已有账号？<Link to='/login'>登录</Link>
-					</div>
+					{allow ? (
+						<div>
+							没有账号？<Link to='/register'>注册账号</Link>
+						</div>
+					) : null}
 				</Form>
 				<div className='login-bg' />
 			</LoginLayout>

@@ -1,23 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App.jsx';
-import * as serviceWorker from './serviceWorker';
 import { HashRouter } from 'react-router-dom';
 import zhCN from 'antd/es/locale/zh_CN';
-import { ConfigProvider } from 'antd'
+import { ConfigProvider } from 'antd';
+import App from './App.jsx';
+import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
-  <div>
-
-    <HashRouter>
-      <ConfigProvider locale={zhCN}>
-        <App />
-      </ConfigProvider>
-
-    </HashRouter>
-  </div>
-  ,
-  document.getElementById('root')
+	<HashRouter>
+		<ConfigProvider locale={zhCN}>
+			<App />
+		</ConfigProvider>
+	</HashRouter>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

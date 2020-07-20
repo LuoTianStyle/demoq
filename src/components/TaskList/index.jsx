@@ -38,7 +38,7 @@ const TaskPane = props => {
     const dv = document.getElementById('dv')
     dv.addEventListener('mouseover', (e) => {
       setShow(true)
-      dv.style.right = 20 + 'px'
+      dv.style.right = -5 + 'px'
     })
     dv.addEventListener('mouseleave', (e) => {
       setShow(false)
@@ -49,11 +49,10 @@ const TaskPane = props => {
   }, [])
   useEffect(() => {
     if (taskPaneCollapsed) {
-
       const dv = document.getElementById('dv')
-      dv.style.right = '20px'
+      dv.style.right = '-5px'
       dv.addEventListener('mouseleave', (e) => {
-        dv.style.right = '20px'
+        dv.style.right = '-5px'
       })
     } else {
       const dv = document.getElementById('dv')

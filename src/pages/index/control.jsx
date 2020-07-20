@@ -27,10 +27,10 @@ function Control ({ setDirShow, currentPath, fetchData, history, selectedRows })
   return (
     <div style={{ background: '#fff', padding: 15, margin: 10, }}>
       <Select value={searchColumn} style={{ width: 150, margin: 5 }} onChange={(e) => { setsearchColumn(e) }}>
-        <Option value={'name'}>合同名称</Option>
+        <Option value={'name'}>文件名称</Option>
         <Option value={'tagIds'}>标签</Option>
       </Select>
-      {searchColumn === 'name' ? <Input onChange={(e) => { setsearchValue(e.target.value) }} style={{ width: 150, margin: 5 }} /> : <Select onChange={(e) => { setsearchValue(e) }} style={{ width: 150, margin: 5 }}>
+      {searchColumn === 'name' ? <Input placeholder="请输入文件名称" onChange={(e) => { setsearchValue(e.target.value) }} style={{ width: 150, margin: 5 }} /> : <Select placeholder="请选择文件标签" onChange={(e) => { setsearchValue(e) }} style={{ width: 150, margin: 5 }}>
         {tagList.map(item => (<Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>))}
       </Select>}
 

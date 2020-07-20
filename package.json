@@ -23,7 +23,6 @@
     "copy-to-clipboard": "^3.3.1",
     "crypto-js": "^4.0.0",
     "css-loader": "3.4.2",
-    "dingtalk-jsapi": "^2.10.3",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^6.6.0",
@@ -150,5 +149,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "md5": "^2.2.1"
   }
 }
