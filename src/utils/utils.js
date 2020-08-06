@@ -129,6 +129,6 @@ const GLOBAL = {
 		}
 	},
 	apiUrl: 'http://pan.ciyun.vip',
-	url: window.location.href.split('/#')[0],
+	url: window.location.href.split('#')[0],
 };
 export default GLOBAL;

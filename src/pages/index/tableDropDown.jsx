@@ -8,7 +8,7 @@ import DocContext from './context';
 import ShareModal from './shareModal';
 import GLOBAL from './../../utils/utils';
 function TableDropDown(props) {
-	const { children, record, type, downloadFile } = props;
+	const { children, record, type, downloadFile, pc } = props;
 	const [reNameShow, setReNameShow] = useState(false);
 	const [tagShow, setTagShow] = useState(false);
 	const [moveShow, setMoveShow] = useState(false);
@@ -63,14 +63,16 @@ function TableDropDown(props) {
 	};
 	const menu = (
 		<Menu>
-			<Menu.Item
-				key='0'
-				onClick={() => {
-					setReNameShow(true);
-				}}
-			>
-				重命名
-			</Menu.Item>
+			{pc !== false ? (
+				<Menu.Item
+					key='0'
+					onClick={() => {
+						setReNameShow(true);
+					}}
+				>
+					重命名
+				</Menu.Item>
+			) : null}
 			{record.folder === 1 ? (
 				<Menu.Item
 					onClick={() => {
@@ -81,7 +83,7 @@ function TableDropDown(props) {
 					{record.processInstanceId ? '查看' : '下载'}
 				</Menu.Item>
 			) : null}
-			{record.folder === 1 ? (
+			{record.folder === 1 && pc !== false ? (
 				<Menu.Item
 					onClick={() => {
 						setTagShow(true);
@@ -103,14 +105,16 @@ function TableDropDown(props) {
 				</Menu.Item>
 			) : null}
 
-			<Menu.Item
-				onClick={() => {
-					setMoveShow(true);
-				}}
-				key='3'
-			>
-				移动
-			</Menu.Item>
+			{pc !== false ? (
+				<Menu.Item
+					onClick={() => {
+						setMoveShow(true);
+					}}
+					key='3'
+				>
+					移动
+				</Menu.Item>
+			) : null}
 			<Menu.Item
 				key='4'
 				onClick={() => {
