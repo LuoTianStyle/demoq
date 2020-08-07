@@ -196,15 +196,15 @@ function Login(props) {
 						<div className='login-line-active'></div>
 					</div>
 					<Form.Item
-						label='用户名'
+						label='邮箱'
 						name='username'
-						rules={[{ required: true, message: '请输入用户名' }]}
+						rules={[{ required: true, message: '请输入邮箱' }]}
 					>
 						<Input
 							prefix={
 								<UserOutlined className='site-form-item-icon' />
 							}
-							placeholder='请输入用户名'
+							placeholder='请输入邮箱'
 						/>
 					</Form.Item>
 					<Form.Item

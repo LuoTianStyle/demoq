@@ -110,7 +110,7 @@ function ShareModal(props) {
 	};
 
 	const copyUrl = () => {
-		if (copy(`${GLOBAL.url}#/download/${fileInfo.shortId}`)) {
+		if (copy(`地址：${GLOBAL.url}#/download/${fileInfo.shortId} 密码：${fileInfo.password}`)) {
 			message.success('复制成功');
 		}
 	};
